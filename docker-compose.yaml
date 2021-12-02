@@ -1,13 +1,13 @@
 version: '2'
 
 services:
-  app:
-    container_name: 'betsushi'
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    ports:
-      - '8000:8000'
+  # app:
+  #   container_name: 'betsushi'
+  #   build:
+  #     context: ./
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - '8000:8000'
 
   redis:
     image: "redis:alpine"
