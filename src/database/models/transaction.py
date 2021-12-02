@@ -1,11 +1,14 @@
 import enum
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Enum, Numeric
-from database.database import  async_db_session, Base
-from database.crud import Crud
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Enum, \
+    Numeric
+from src.database.database import Base
+from src.database.crud import Crud
+
 
 class TransactionType(enum.Enum):
     send = "send"
     receive = "receive"
+
 
 class TransactionStatus(enum.Enum):
     queued = "queued"
@@ -15,11 +18,12 @@ class TransactionStatus(enum.Enum):
     processed = "processed"
     cancelled = "cancelled"
     reversed = "reversed"
-    
+
+
 # sqlalchemy models for transaction
 class Transaction(Base, Crud):
     __tablename__ = 'transaction'
-    
+
     id = Column(Integer, primary_key=True, autoincrement=True)
     razorpay_tid = Column(String)
     amount = Column(Numeric)
@@ -29,7 +33,7 @@ class Transaction(Base, Crud):
     upi = Column(String)
     status = Column(Enum(TransactionStatus))
     created_at = Column(DateTime)
-    
+
     def __repr__(self):
         return (
             f"<{self.__class__.__name__}("
@@ -43,5 +47,3 @@ class Transaction(Base, Crud):
             f"status={self.status}, "
             f"created_at={self.created_at} "
         )
-
-        

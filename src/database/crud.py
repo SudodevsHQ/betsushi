@@ -1,7 +1,8 @@
 from sqlalchemy import update as sqlalchemy_update
 from sqlalchemy.future import select
 
-from database.database import  async_db_session
+from src.database.database import async_db_session
+
 
 class Crud:
     @classmethod

@@ -24,7 +24,9 @@ services:
         environment:
           - POSTGRES_USER=root
           - POSTGRES_PASSWORD=sony1234
-          - POSTGRES_DB=indipe
+          - APP_DB_USER=source
+          - APP_DB_PASS=sony1234
+          - APP_DB_NAME=indipe
         logging:
           options:
             max-size: 10m

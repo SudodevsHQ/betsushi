@@ -1,0 +1,1 @@
+RAZORPAY_BASE_URL = "https://api.razorpay.com/v1"

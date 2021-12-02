@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
-
+from starlette.config import Config
 Base = declarative_base()
 
 
@@ -8,14 +8,17 @@ class AsyncDatabaseSession:
     def __init__(self):
         self._session = None
         self._engine = None
+        self.config = Config(".env")
+        self.password = self.config.get("POSTGRES_PASSWORD", cast=str)
 
     def __getattr__(self, name):
         return getattr(self._session, name)
 
     async def init(self):
-        self._engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost/postgres",
-                                           echo=True,
-                                           )
+        self._engine = create_async_engine(
+            f"postgresql+asyncpg://root:{self.password}@localhost/indipe",
+            echo=True,
+        )
 
         self._session = sessionmaker(
             self._engine, expire_on_commit=False, class_=AsyncSession
