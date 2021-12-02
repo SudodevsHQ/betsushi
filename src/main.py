@@ -1,7 +1,7 @@
 import aiohttp
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
-from starlette.routing import Route
+from starlette.routing import Route, WebSocketRoute
 from src.models.request.razorpayx import CreateContactRequest
 from src.extensions import create_contact
 from src.database.database import async_db_session
@@ -20,6 +20,12 @@ async def close_aiohttp_session():
 
 async def homepage(request):
     return JSONResponse({"hello": "world"})
+
+
+async def handle_websocket(websocket):
+    await websocket.accept()
+    await websocket.receive_text()
+    await websocket.send_text("Hello World")
 
 
 async def create_contact_route(request):
@@ -41,6 +47,7 @@ app = Starlette(
     routes=[
         Route("/", homepage),
         Route("/create_contact", create_contact_route, methods=["POST"]),
+        WebSocketRoute("/ws", handle_websocket),
     ],
     on_startup=[init_database],
     on_shutdown=[close_aiohttp_session],
