@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+  app:
+    container_name: 'betsushi'
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'
+
+  redis:
+    image: "redis:alpine"
+    container_name: cache
+    expose:
+      - 6379
+  postgres:
+        image: postgres:14.1
+        container_name: 'postgres'
+        restart: always
+        environment:
+          - POSTGRES_USER=root
+          - POSTGRES_PASSWORD=sony1234
+        logging:
+          options:
+            max-size: 10m
+            max-file: "3"
+        ports:
+          - '5438:5432'
+
+  
