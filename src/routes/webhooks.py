@@ -26,10 +26,10 @@ async def razorpayx_webhook(request):
 
     if websocket and websocket.client_state == WebSocketState.CONNECTED:
         await websocket.send_json(response)
-        return JSONResponse({"Success": "Success"}, status_code=500)
+        return JSONResponse({"Success": "Success"}, status_code=200)
 
     else:
-        return JSONResponse({"Error": "Websocket is already closed"}, status_code=400)
+        return JSONResponse({"Error": "Websocket is already closed"}, status_code=500)
 
 
 async def razorpay_webhook(request):
