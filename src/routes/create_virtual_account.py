@@ -38,7 +38,10 @@ async def create_account(request):
             )
 
         receivers = {
-            "types": ["bank_account"]
+            "types": ["vpa"],
+            "vpa": {
+                "descriptor": user.full_name.replace(" ", "-"),
+            },
         }
         try:
             account_request = VirtualAccoutRequest(
