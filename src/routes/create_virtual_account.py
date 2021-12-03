@@ -1,4 +1,5 @@
 from starlette.responses import JSONResponse
+from uuid import uuid4
 from src.extensions import create_virtual_account
 from src.extensions import create_contact
 
@@ -9,6 +10,7 @@ from src.models.request.razorpayx import CreateContactRequest
 
 from src.database.models.users import User
 from src.database.models.account import Account
+from src.database.models.upi import UPI
 
 
 async def create_account(request):
@@ -37,30 +39,39 @@ async def create_account(request):
                 status_code=400,
             )
 
-        receivers = {
-            "types": ["vpa"],
-            "vpa": {
-                "descriptor": user.full_name.replace(" ", "-"),
-            },
-        }
+        # receivers = {
+        #     "types": ["vpa"],
+        #     "vpa": {
+        #         "descriptor": user.full_name.replace(" ", "-"),
+        #     },
+        # }
         try:
-            account_request = VirtualAccoutRequest(
-                receivers=receivers,
-                close_by=None,
-                notes=json.get("notes"),
-                description=json.get("description"),
-                customer_id=contact.id,
-            )
-            virtual_account = await create_virtual_account(
-                session=session, data=account_request
-            )
-            print(account_request, "\n\n")
-            print(virtual_account)
-            await Account.create(balance=0, contact_id=contact.id, user_id=user_id)
+            # account_request = VirtualAccoutRequest(
+            #     receivers=receivers,
+            #     close_by=None,
+            #     notes=json.get("notes"),
+            #     description=json.get("description"),
+            #     customer_id=contact.id,
+            # )
+            # virtual_account = await create_virtual_account(
+            #     session=session, data=account_request
+            # )
+            # MOCK ACCOUNT CREATION
+            account_id = str(uuid4())
+            upi_id = f"{user.full_name.lower().replace(' ', '-')}@okicici"
+            
+            await Account.create(id=account_id, balance=0, contact_id=contact.id, user_id=user_id)
+            await UPI.create(id=upi_id, user_id=user_id)
+            
         except Exception as e:
             return JSONResponse(
                 {"message": str(e), "error": "Could not create Account"},
                 status_code=400,
             )
 
-        return JSONResponse(virtual_account.__dict__)
+        return JSONResponse({
+            "user_id": user_id,
+            "account_id": account_id,
+            "balance": 0,
+            "upi_id": upi_id,
+        })
