@@ -7,7 +7,7 @@ from src.database.database import Base
 class Account(Base, Crud):
     __tablename__ = "account"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(String, primary_key=True)
     balance = Column(Numeric)
     contact_id = Column(String)
     user_id = Column(String, ForeignKey("users.id"))
