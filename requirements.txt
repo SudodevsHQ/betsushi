@@ -5,3 +5,4 @@ sqlalchemy[asyncio]==1.4.27
 asyncpg==0.25.0
 dacite==1.6.0
 greenlet==1.1.2
+firebase-admin==5.1.0

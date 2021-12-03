@@ -1,13 +1,17 @@
 from starlette.applications import Starlette
+from starlette.middleware import Middleware
 from starlette.responses import JSONResponse
 from starlette.routing import Route, WebSocketRoute
+from src.middleware.auth import AuthMiddleware
 from src.database.database import async_db_session
 from src.routes.websocket import ClientWebsocketEndpoint
+from starlette.middleware.authentication import AuthenticationMiddleware
 
 from src.utils.http import close_aiohttp_session
 
 from src.routes.create_user import create_user
 from src.routes.create_virtual_account import create_account
+
 
 async def init_database():
     await async_db_session.init()
@@ -28,4 +32,5 @@ app = Starlette(
     ],
     on_startup=[init_database],
     on_shutdown=[close_aiohttp_session],
+    middleware=[Middleware(AuthenticationMiddleware, backend=AuthMiddleware())]
 )
