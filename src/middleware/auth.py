@@ -10,6 +10,10 @@ from starlette.authentication import (
 
 class AuthMiddleware(AuthenticationBackend):
     async def authenticate(self, request):
+        whitelist = ["/"]
+        if request.url.path in whitelist:
+            return
+            
         try:
             id_token = request.headers["Authorization"]
             decoded_token = auth.verify_id_token(id_token, app=firebase_app)
