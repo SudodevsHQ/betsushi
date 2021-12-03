@@ -23,12 +23,6 @@ async def homepage(request):
     return JSONResponse({"hello": "world"})
 
 
-async def handle_websocket(websocket):
-    await websocket.accept()
-    await websocket.receive_text()
-    await websocket.send_text("Hello World")
-
-
 async def create_contact_route(request):
     json = await request.json()
     request = CreateContactRequest(
@@ -48,11 +42,7 @@ app = Starlette(
     routes=[
         Route("/", homepage),
         Route("/create_contact", create_contact_route, methods=["POST"]),
-<<<<<<< Updated upstream
-        WebSocketRoute("/ws", handle_websocket),
-=======
         WebSocketRoute("/ws", ClientWebsocketEndpoint),
->>>>>>> Stashed changes
     ],
     on_startup=[init_database],
     on_shutdown=[close_aiohttp_session],
