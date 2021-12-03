@@ -1,26 +1,19 @@
-from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.responses import JSONResponse
 from src.utils.auth import firebase_app
 from firebase_admin import auth
+from starlette.authentication import (
+    AuthenticationBackend,
+    AuthenticationError,
+    AuthCredentials,
+    SimpleUser,
+)
 
 
-class AuthMiddleware(BaseHTTPMiddleware):
-    def __init__(self, app, *args, **kwargs):
-        super().__init__(app, *args, **kwargs)
-        self.app = firebase_app
-
-    async def dispatch(self, request, call_next):
-        response = await call_next(request)
-        id_token = request.headers.get('Authorization')
-        if not id_token:
-            return JSONResponse(
-                {'error': 'No token provided'}, status_code=401
-            )
-
-        decoded_token = auth.verify_id_token(id_token, app=self.app)
-        uid = decoded_token['uid']
-        if not uid:
-            return JSONResponse(
-                {'error': 'Invalid token'}, status_code=401
-            )
-        return response
+class AuthMiddleware(AuthenticationBackend):
+    async def authenticate(self, request):
+        try:
+            id_token = request.headers["Authorization"]
+            decoded_token = auth.verify_id_token(id_token, app=firebase_app)
+            return AuthCredentials(["authenticated"]), \
+                SimpleUser(decoded_token["uid"])
+        except Exception as e:
+            raise AuthenticationError(e)

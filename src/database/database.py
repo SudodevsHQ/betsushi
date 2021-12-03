@@ -16,7 +16,7 @@ class AsyncDatabaseSession:
 
     async def init(self):
         self._engine = create_async_engine(
-            f"postgresql+asyncpg://root:{self.password}@postgres/indipe",
+            f"postgresql+asyncpg://root:{self.password}@{self.config.get('POSTGRES_HOST', cast=str,  default='localhost')}/indipe",
             echo=True,
         )
 
