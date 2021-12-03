@@ -1,6 +1,9 @@
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
 from starlette.routing import Route, WebSocketRoute
+from src.middleware.auth import AuthMiddleware
+from src.models.request.razorpayx import CreateContactRequest
+from src.extensions import create_contact
 from src.database.database import async_db_session
 from src.routes.websocket import ClientWebsocketEndpoint
 
@@ -28,4 +31,5 @@ app = Starlette(
     ],
     on_startup=[init_database],
     on_shutdown=[close_aiohttp_session],
+    middleware=[AuthMiddleware],
 )
