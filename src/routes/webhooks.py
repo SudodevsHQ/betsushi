@@ -1,6 +1,8 @@
 from dacite import from_dict
 from database.models.transaction import Transaction
 from src.models.response.razorpayx import PayoutsPayload
+from src.routes.websocket import ClientWebsocketEndpoint
+from starlette.websockets import WebSocket, WebSocketState
 
 
 async def razorpayx_webhook(request):
@@ -19,6 +21,12 @@ async def razorpayx_webhook(request):
         status=data.event.split(".")[1],
     )
     # send to websocket here
+    websocket = ClientWebsocketEndpoint.user_socket_map.get(user_id)
+
+    if websocket and websocket.client_state == WebSocketState.CONNECTED:
+        await websocket.send_json(data.__dict__)
+    else:
+        await websocket.send_json({'Error': 'Websocket is already closed'})
 
 
 async def razorpay_webhook(request):
@@ -36,5 +44,11 @@ async def razorpay_webhook(request):
         upi=upi,
         status=data.event.split(".")[1],
     )
-    # send to websocket here
 
+    # send to websocket here
+    websocket = ClientWebsocketEndpoint.user_socket_map.get(user_id)
+
+    if websocket and websocket.client_state == WebSocketState.CONNECTED:
+        await websocket.send_json(data.__dict__)
+    else:
+        await websocket.send_json({'Error': 'Websocket is already closed'})
