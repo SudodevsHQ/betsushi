@@ -8,6 +8,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - '8000:8000'
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/path/to/credentials
 
   redis:
     image: "redis:alpine"
