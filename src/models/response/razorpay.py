@@ -13,8 +13,8 @@ class Receiver:
 
 @dataclass
 class VirtualAccoutResponse:
-    amount_expected: None
-    closed_at: None
+    amount_expected: Optional[str] = None
+    closed_at: Optional[str] = None
     id: Optional[str] = None
     name: Optional[str] = None
     entity: Optional[str] = None

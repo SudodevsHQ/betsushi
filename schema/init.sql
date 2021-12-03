@@ -1,6 +1,6 @@
 create table if not exists users
 (
-    id         varchar,
+    id         varchar primary key,
     full_name  varchar,
     currency   varchar,
     created_at timestamp default now()
@@ -8,7 +8,7 @@ create table if not exists users
 
 create table if not exists account
 (
-    id         serial primary key,
+    id         varchar primary key,
     balance    double precision,
     contact_id varchar,
     user_id    varchar,

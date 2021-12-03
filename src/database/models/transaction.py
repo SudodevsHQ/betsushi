@@ -27,7 +27,7 @@ class Transaction(Base, Crud):
     id = Column(Integer, primary_key=True, autoincrement=True)
     razorpay_tid = Column(String)
     amount = Column(Numeric)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(String, ForeignKey('users.id'))
     type = Column(Enum(TransactionType))
     fund_account_id = Column(String, nullable=True)
     upi = Column(String)
