@@ -8,7 +8,7 @@ class UPI(Base, Crud):
     __tablename__ = 'upi'
 
     id = Column(String, primary_key=True)
-    user_id = Column(String, ForeignKey('user.id'))
+    user_id = Column(String, ForeignKey('users.id'))
     created_at = Column(DateTime)
 
     __mapper_args__ = {"eager_defaults": True}

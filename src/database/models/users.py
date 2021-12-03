@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, String, DateTime
 
 from src.database.database import Base
 from src.database.crud import Crud
@@ -9,7 +9,7 @@ from datetime import datetime
 class User(Base, Crud):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(String, primary_key=True)
     full_name = Column(String)
     currency = Column(String(3))
     created_at = Column(DateTime, default=datetime.now())

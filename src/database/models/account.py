@@ -10,7 +10,7 @@ class Account(Base, Crud):
     id = Column(Integer, primary_key=True, autoincrement=True)
     balance = Column(Numeric)
     contact_id = Column(String)
-    user_id = Column(Integer, ForeignKey("user.id"))
+    user_id = Column(String, ForeignKey("users.id"))
     created_at = Column(DateTime)
 
     # required in order to acess columns with server defaults

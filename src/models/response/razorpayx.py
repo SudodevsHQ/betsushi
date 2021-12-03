@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Dict
+from typing import Dict, Optional
 
 from src.models.request.razorpayx import Vpa
 
@@ -13,10 +13,10 @@ class CreateContactResponse:
     email: str
     type: str
     reference_id: str
-    batch_id: str
     active: bool
     notes: Dict[str, str]
     created_at: int
+    batch_id: Optional[str] = None
 
 
 @dataclass
@@ -27,8 +27,8 @@ class CreateFundAccountResponse:
     account_type: str
     vpa: Vpa
     active: bool
-    batch_id: str
     created_at: int
+    batch_id: Optional[str] = None
 
 
 @dataclass
@@ -47,6 +47,6 @@ class CreatePayoutResponse:
     purpose: str
     reference_id: str
     narration: str
-    batch_id: str
     failure_reason: str
     created_at: int
+    batch_id: Optional[str] = None
