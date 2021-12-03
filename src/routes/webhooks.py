@@ -1,8 +1,9 @@
 from dacite import from_dict
-from database.models.transaction import Transaction
+from src.database.models.transaction import Transaction
 from src.models.response.razorpayx import PayoutsPayload
 from src.routes.websocket import ClientWebsocketEndpoint
 from starlette.websockets import WebSocket, WebSocketState
+from starlette.responses import JSONResponse
 
 
 async def razorpayx_webhook(request):
@@ -12,8 +13,8 @@ async def razorpayx_webhook(request):
     user_id = thing[0]
     upi = thing[1]
     await Transaction.create(
-        razorpay_tid=data.payload.entity.id,
-        amount=data.payload.entity.amount,
+        razorpay_tid=data.payload.payout.entity.id,
+        amount=data.payload.payout.entity.amount,
         user_id=user_id,
         type="send",
         fund_account_id=data.payload.payout.entity.fund_account_id,
@@ -24,9 +25,11 @@ async def razorpayx_webhook(request):
     websocket = ClientWebsocketEndpoint.user_socket_map.get(user_id)
 
     if websocket and websocket.client_state == WebSocketState.CONNECTED:
-        await websocket.send_json(data.__dict__)
+        await websocket.send_json(response)
+        return JSONResponse({"Success": "Success"}, status_code=500)
+
     else:
-        await websocket.send_json({'Error': 'Websocket is already closed'})
+        return JSONResponse({"Error": "Websocket is already closed"}, status_code=400)
 
 
 async def razorpay_webhook(request):
@@ -36,8 +39,8 @@ async def razorpay_webhook(request):
     user_id = thing[0]
     upi = thing[1]
     await Transaction.create(
-        razorpay_tid=data.payload.entity.id,
-        amount=data.payload.entity.amount,
+        razorpay_tid=data.payload.payout.entity.id,
+        amount=data.payload.payout.entity.amount,
         user_id=user_id,
         type="receive",
         fund_account_id=data.payload.payout.entity.fund_account_id,
@@ -49,6 +52,8 @@ async def razorpay_webhook(request):
     websocket = ClientWebsocketEndpoint.user_socket_map.get(user_id)
 
     if websocket and websocket.client_state == WebSocketState.CONNECTED:
-        await websocket.send_json(data.__dict__)
+        await websocket.send_json(response)
+        return JSONResponse({"Success": "Success"}, status_code=200)
+
     else:
-        await websocket.send_json({'Error': 'Websocket is already closed'})
+        return JSONResponse({"Error": "Websocket is already closed"}, status_code=500)

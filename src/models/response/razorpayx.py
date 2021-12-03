@@ -61,8 +61,8 @@ class Error:
 
 @dataclass
 class Entity:
-    reference_id: None
     batch_id: None
+    reference_id: Optional[str] = None
     id: Optional[str] = None
     entity: Optional[str] = None
     fund_account_id: Optional[str] = None
