@@ -6,7 +6,7 @@ from src.utils.http import session
 from src.database.models.users import User
 
 
-async def create_user(request):
+async def create_virtual_account(request):
     json = await request.json()
     request = CreateContactRequest(
         name=json.get("name"),
