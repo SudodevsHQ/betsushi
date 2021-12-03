@@ -5,6 +5,7 @@ from starlette.routing import Route, WebSocketRoute
 from src.models.request.razorpayx import CreateContactRequest
 from src.extensions import create_contact
 from src.database.database import async_db_session
+from src.routes.websocket import ClientWebsocketEndpoint
 session: aiohttp.ClientSession = aiohttp.ClientSession()
 
 
@@ -47,7 +48,11 @@ app = Starlette(
     routes=[
         Route("/", homepage),
         Route("/create_contact", create_contact_route, methods=["POST"]),
+<<<<<<< Updated upstream
         WebSocketRoute("/ws", handle_websocket),
+=======
+        WebSocketRoute("/ws", ClientWebsocketEndpoint),
+>>>>>>> Stashed changes
     ],
     on_startup=[init_database],
     on_shutdown=[close_aiohttp_session],
