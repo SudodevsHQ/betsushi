@@ -26,3 +26,4 @@ class VirtualAccoutResponse:
     receivers: Optional[List[Receiver]] = None
     close_by: Optional[int] = None
     created_at: Optional[int] = None
+

@@ -33,6 +33,6 @@ class CreatePayoutRequest:
     mode: str
     purpose: str
     queue_if_low_balance: bool
-    reference_id: str
+    reference_id: str  # user_id  upi_id
     narration: str
     notes: Dict[str, str]

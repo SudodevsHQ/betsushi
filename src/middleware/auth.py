@@ -10,7 +10,7 @@ from starlette.authentication import (
 
 class AuthMiddleware(AuthenticationBackend):
     async def authenticate(self, request):
-        whitelist = ["/"]
+        whitelist = ["/", "/webhook/do", "/webhook/get"]
         if request.url.path in whitelist:
             return
             
