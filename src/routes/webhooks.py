@@ -4,6 +4,8 @@ from src.database.models.account import Account
 from src.database.models.transaction import Transaction
 from src.models.response.razorpayx import PayoutsPayload
 from src.models.response.razorpay import PaymentsPayload
+from src.database.models.transaction import Transaction
+from src.utils.transactions import get_all_transactions
 
 from src.routes.websocket import ClientWebsocketEndpoint
 from starlette.websockets import WebSocket, WebSocketState
@@ -37,7 +39,15 @@ async def razorpayx_webhook(request):
     websocket = ClientWebsocketEndpoint.user_socket_map.get(user_id)
 
     if websocket and websocket.client_state == WebSocketState.CONNECTED:
-        await websocket.send_json(response)
+        transactions = await get_all_transactions(user_id)
+        account = await Account.get_by_user_id(user_id)
+   
+        websocket_response = {
+            "user_id": user_id,
+            "transactions": transactions,
+            "balance": float(account.balance)
+        }
+        await websocket.send_json(websocket_response)
         return JSONResponse({"Success": "Success"}, status_code=200)
 
     else:
@@ -74,7 +84,15 @@ async def razorpay_webhook(request):
     websocket = ClientWebsocketEndpoint.user_socket_map.get(user_id)
 
     if websocket and websocket.client_state == WebSocketState.CONNECTED:
-        await websocket.send_json(response)
+        transactions = await get_all_transactions(user_id)
+        account = await Account.get_by_user_id(user_id)
+   
+        websocket_response = {
+            "user_id": user_id,
+            "transactions": transactions,
+            "balance": float(account.balance)
+        }
+        await websocket.send_json(websocket_response)
         return JSONResponse({"Success": "Success"}, status_code=200)
 
     else:
