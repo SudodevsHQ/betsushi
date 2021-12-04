@@ -38,8 +38,13 @@ class Crud:
     async def get(cls, id):
         query = select(cls).where(cls.id == id)
         results = await async_db_session.execute(query)
-        (result,) = results.one()
-        return result
+        try: 
+            results = await async_db_session.execute(query)
+            print(results)
+            return results.scalars().first()
+        except Exception as e:
+            return None
+
 
     @classmethod
     async def get_by_user_id(cls, id):
