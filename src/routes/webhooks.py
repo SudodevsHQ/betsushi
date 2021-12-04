@@ -21,7 +21,7 @@ async def razorpayx_webhook(request):
     status = data.event.split(".")[1]
     await Transaction.create(
         razorpay_tid=data.payload.payout.entity.id,
-        amount=data.payload.payout.entity.amount,
+        amount=data.payload.payout.entity.amount / 100,
         user_id=user_id,
         type="send",
         fund_account_id=data.payload.payout.entity.fund_account_id,
@@ -31,9 +31,9 @@ async def razorpayx_webhook(request):
     if status == "processed":
         account = await Account.get_by_user_id(user_id)
         await Account.update_by_user_id(
-            user_id, balance=account.balance - data.payload.payout.entity.amount
+            user_id, balance=float(account.balance) - data.payload.payout.entity.amount / 100
         )
-        print(f"Deducted {data.payload.payout.entity.amount} from {user_id}")
+        print(f"Deducted {data.payload.payout.entity.amount / 100} from {user_id}")
     # send to websocket here
     websocket = ClientWebsocketEndpoint.user_socket_map.get(user_id)
 
