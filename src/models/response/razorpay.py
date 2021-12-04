@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, List, Any
+from typing import Optional, List, Any, Dict
 
 
 
@@ -63,7 +63,7 @@ class Entity:
     bank: Optional[str] = None
     email: Optional[str] = None
     contact: Optional[str] = None
-    notes: Optional[List[Any]] = None
+    notes: Optional[Dict[str, str]] = None
     acquirer_data: Optional[AcquirerData] = None
     created_at: Optional[int] = None
 
