@@ -1,4 +1,6 @@
 from dacite import from_dict
+from sqlalchemy.sql.functions import user
+from database.models.account import Account
 from src.database.models.transaction import Transaction
 from src.models.response.razorpayx import PayoutsPayload
 from src.routes.websocket import ClientWebsocketEndpoint
@@ -12,6 +14,7 @@ async def razorpayx_webhook(request):
     thing = data.payload.payout.entity.reference_id.split(" ")
     user_id = thing[0]
     upi = thing[1]
+    status = data.event.split(".")[1]
     await Transaction.create(
         razorpay_tid=data.payload.payout.entity.id,
         amount=data.payload.payout.entity.amount,
@@ -19,8 +22,14 @@ async def razorpayx_webhook(request):
         type="send",
         fund_account_id=data.payload.payout.entity.fund_account_id,
         upi=upi,
-        status=data.event.split(".")[1],
+        status=status,
     )
+    if status == "processed":
+        account = Account.get_by_user_id(user_id)
+        await Account.update_by_user_id(
+            user_id, balance=account.balance - data.payload.payout.entity.amount
+        )
+        print(f"Deducted {data.payload.payout.entity.amount} from {user_id}")
     # send to websocket here
     websocket = ClientWebsocketEndpoint.user_socket_map.get(user_id)
 

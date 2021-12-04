@@ -23,6 +23,18 @@ class Crud:
         await async_db_session.commit()
 
     @classmethod
+    async def update_by_user_id(cls, id, **kwargs):
+        query = (
+            sqlalchemy_update(cls)
+            .where(cls.user_id == id)
+            .values(**kwargs)
+            .execution_options(synchronize_session="fetch")
+        )
+
+        await async_db_session.execute(query)
+        await async_db_session.commit()
+
+    @classmethod
     async def get(cls, id):
         query = select(cls).where(cls.id == id)
         results = await async_db_session.execute(query)
