@@ -11,11 +11,6 @@ services:
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/path/to/credentials
 
-  redis:
-    image: "redis:alpine"
-    container_name: cache
-    expose:
-      - 6379
   postgres:
         image: postgres:14.1
         container_name: 'postgres'
