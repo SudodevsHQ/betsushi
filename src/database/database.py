@@ -29,5 +29,8 @@ class AsyncDatabaseSession:
         async with self._engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
 
+    async def flush(self):
+        await self._session.flush()
+
 
 async_db_session = AsyncDatabaseSession()

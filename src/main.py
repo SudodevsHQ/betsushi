@@ -3,6 +3,7 @@ from starlette.middleware import Middleware
 from starlette.responses import JSONResponse
 from starlette.routing import Route, WebSocketRoute
 from src.middleware.auth import AuthMiddleware
+from src.middleware.database import DatabaseMiddleware
 from src.database.database import async_db_session
 from src.routes.websocket import ClientWebsocketEndpoint
 from starlette.middleware.authentication import AuthenticationMiddleware
@@ -37,5 +38,5 @@ app = Starlette(
     ],
     on_startup=[init_database],
     on_shutdown=[close_aiohttp_session],
-    middleware=[Middleware(AuthenticationMiddleware, backend=AuthMiddleware())]
+    middleware=[Middleware(AuthenticationMiddleware, backend=AuthMiddleware()),  Middleware(DatabaseMiddleware)]
 )
