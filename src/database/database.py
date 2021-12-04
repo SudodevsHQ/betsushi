@@ -32,5 +32,8 @@ class AsyncDatabaseSession:
     async def flush(self):
         await self._session.flush()
 
+    async def rollback(self):
+        await self._session.rollback()
+
 
 async_db_session = AsyncDatabaseSession()

@@ -12,6 +12,9 @@ from src.database.models.users import User
 from src.database.models.account import Account
 from src.database.models.upi import UPI
 
+from src.database.database import async_db_session
+
+
 
 async def create_account(request):
     json = await request.json()
@@ -30,7 +33,7 @@ async def create_account(request):
                 email=json.get("email"),
                 type=json.get("type"),
                 reference_id=json.get("reference_id"),
-                notes=json.get("notes"),
+                notes=[],
             )
             contact = await create_contact(session=session, data=contact_request)
         except Exception as e:
@@ -78,6 +81,7 @@ async def create_account(request):
     
         except Exception as e:
             print('2')
+            await async_db_session.rollback()
             return JSONResponse(
                 {"message": str(e), "error": "Could not create Account"},
                 status_code=400,
