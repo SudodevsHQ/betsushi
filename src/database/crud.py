@@ -47,3 +47,10 @@ class Crud:
         results = await async_db_session.execute(query)
         (result,) = results.one()
         return result
+
+    @classmethod
+    async def fetch_transactions(cls, id):
+        query = select(cls).where(cls.user_id == id).order_by(cls.created_at.desc())
+        results = await async_db_session.execute(query)
+        
+        return results.all()

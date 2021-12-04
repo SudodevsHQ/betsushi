@@ -11,6 +11,7 @@ from src.utils.http import close_aiohttp_session
 from src.routes.payout import payout
 from src.routes.create_user import create_user
 from src.routes.create_virtual_account import create_account
+from src.routes.transactions import fetch_latest_transactions
 
 
 async def init_database():
@@ -31,6 +32,7 @@ app = Starlette(
         Route("/webhook/do", razorpayx_webhook, methods=["POST"]),
         Route("/webhook/get", razorpay_webhook, methods=["POST"]),
         Route("/payout", payout, methods=["POST"]),
+        Route("/transactions", fetch_latest_transactions, methods=["GET"]),
         WebSocketRoute("/ws", ClientWebsocketEndpoint),
     ],
     on_startup=[init_database],
