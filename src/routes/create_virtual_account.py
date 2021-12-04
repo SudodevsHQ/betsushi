@@ -66,7 +66,7 @@ async def create_account(request):
                 return JSONResponse({
                     "user_id": user_id,
                     "account_id": account.id,
-                    "balance": int(account.balance),
+                    "balance": float(account.balance),
                     "upi_id": upi_id.id,
                 })
             else:
