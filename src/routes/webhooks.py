@@ -12,6 +12,7 @@ from starlette.responses import JSONResponse
 
 async def razorpayx_webhook(request):
     response = await request.json()
+    print(response, "do")
     data = from_dict(data_class=PayoutsPayload, data=response)
     thing = data.payload.payout.entity.reference_id.split(" ")
     user_id = thing[0]
@@ -44,7 +45,9 @@ async def razorpayx_webhook(request):
 
 
 async def razorpay_webhook(request):
+    
     response = await request.json()
+    print(response, "get")
     data: PaymentsPayload = from_dict(data_class=PaymentsPayload, data=response)
     
     user_id = data.payload.payment.entity.notes.user_id
@@ -52,7 +55,7 @@ async def razorpay_webhook(request):
     status = data.event.split(".")[1]
     await Transaction.create(
         razorpay_tid=data.payload.payment.entity.id,
-        amount=data.payload.payment.entity.amount,
+        amount=data.payload.payment.entity.amount / 100,
         user_id=user_id,
         type="receive",
         fund_account_id=None,
@@ -60,10 +63,10 @@ async def razorpay_webhook(request):
         status=data.event.split(".")[1],
     )
 
-    if status == "captured":
+    if status == "authorized":
         account = await Account.get_by_user_id(user_id)
         await Account.update_by_user_id(
-            user_id, balance=account.balance + data.payload.payment.entity.amount
+            user_id, balance=account.balance + data.payload.payment.entity.amount / 100
         )
         print(f"Credited {data.payload.payment.entity.amount} from {user_id}")
 
