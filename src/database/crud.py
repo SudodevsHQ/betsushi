@@ -44,6 +44,7 @@ class Crud:
     @classmethod
     async def get_by_user_id(cls, id):
         query = select(cls).where(cls.user_id == id)
+<<<<<<< Updated upstream
         results = await async_db_session.execute(query)
         (result,) = results.one()
         return result
@@ -54,3 +55,11 @@ class Crud:
         results = await async_db_session.execute(query)
         
         return results.all()
+=======
+        try: 
+            results = await async_db_session.execute(query)
+            print(results)
+            return results.scalars().first()
+        except Exception as e:
+            return None
+>>>>>>> Stashed changes

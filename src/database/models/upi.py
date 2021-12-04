@@ -1,7 +1,9 @@
 from sqlalchemy import Column, DateTime, ForeignKey, String
 from src.database.crud import Crud
 from src.database.database import Base
+from sqlalchemy.future import select
 
+from src.database.database import async_db_session
 
 # sqlalchemy models for upi
 class UPI(Base, Crud):
@@ -20,3 +22,4 @@ class UPI(Base, Crud):
             f"user_id={self.user_id}, "
             f"created_at={self.created_at} "
         )
+        

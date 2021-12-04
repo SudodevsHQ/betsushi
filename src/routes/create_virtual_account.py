@@ -23,7 +23,7 @@ async def create_account(request):
     else:
         try:
             user: User = await User.get(user_id)
-
+            print(user)
             contact_request = CreateContactRequest(
                 name=user.full_name,
                 contact=json.get("contact"),
@@ -34,6 +34,7 @@ async def create_account(request):
             )
             contact = await create_contact(session=session, data=contact_request)
         except Exception as e:
+            print(str(e))
             return JSONResponse(
                 {"message": str(e), "error": "Could not create Contact"},
                 status_code=400,
@@ -57,13 +58,26 @@ async def create_account(request):
             #     session=session, data=account_request
             # )
             # MOCK ACCOUNT CREATION
-            account_id = str(uuid4())
-            upi_id = f"{user.full_name.lower().replace(' ', '-')}@okicici"
+            upi_id = ''
             
-            await Account.create(id=account_id, balance=0, contact_id=contact.id, user_id=user_id)
-            await UPI.create(id=upi_id, user_id=user_id)
-            
+            upi_id = await UPI.get_by_user_id(user_id)
+            if upi_id:
+                account = await Account.get_by_user_id(user_id)
+                return JSONResponse({
+                    "user_id": user_id,
+                    "account_id": account.id,
+                    "balance": int(account.balance),
+                    "upi_id": upi_id.id,
+                })
+            else:
+                account_id = str(uuid4())
+                upi_id = f"{user.full_name.lower().replace(' ', '-')}@okicici"
+                
+                await Account.create(id=account_id, balance=0, contact_id=contact.id, user_id=user_id)
+                await UPI.create(id=upi_id, user_id=user_id)
+    
         except Exception as e:
+            print('2')
             return JSONResponse(
                 {"message": str(e), "error": "Could not create Account"},
                 status_code=400,

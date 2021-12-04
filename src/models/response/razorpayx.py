@@ -14,8 +14,8 @@ class CreateContactResponse:
     type: str
     reference_id: str
     active: bool
-    notes: Dict[str, str]
     created_at: int
+    notes: Optional[list]
     batch_id: Optional[str] = None
 
 

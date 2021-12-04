@@ -1,7 +1,9 @@
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, Numeric, String
 from src.database.crud import Crud
 from src.database.database import Base
+from sqlalchemy.future import select
 
+from src.database.database import async_db_session
 
 # sqlalchemy models for the account table
 class Account(Base, Crud):
@@ -27,3 +29,10 @@ class Account(Base, Crud):
             f"user_id={self.user_id}, "
             f"created_at={self.created_at} "
         )
+        
+    @classmethod
+    async def get_by_user_id(cls, user_id):
+        query = select(cls).where(cls.user_id == user_id)
+        results = await async_db_session.execute(query)
+        (result,) = results.one()
+        return result
