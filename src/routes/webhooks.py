@@ -47,8 +47,8 @@ async def razorpay_webhook(request):
     response = await request.json()
     data: PaymentsPayload = from_dict(data_class=PaymentsPayload, data=response)
     
-    user_id = data.payload.payment.entity.notes["user_id"]
-    upi = data.payload.payment.entity.notes["upi_id"]
+    user_id = data.payload.payment.entity.notes.user_id
+    upi = data.payload.payment.entity.notes.upi_id
     status = data.event.split(".")[1]
     await Transaction.create(
         razorpay_tid=data.payload.payment.entity.id,

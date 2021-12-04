@@ -32,18 +32,23 @@ class VirtualAccoutResponse:
 
 @dataclass
 class AcquirerData:
-    bank_transaction_id: Optional[str] = None
+    auth_code: Optional[int] = None
+
+
+@dataclass
+class Notes:
+    user_id: Optional[str] = None
+    upi_id: Optional[str] = None
 
 
 @dataclass
 class Entity:
+    order_id: None
     invoice_id: None
     refund_status: None
-    description: None
-    card_id: None
+    bank: None
     wallet: None
     vpa: None
-    fee: None
     tax: None
     error_code: None
     error_description: None
@@ -55,16 +60,16 @@ class Entity:
     amount: Optional[int] = None
     currency: Optional[str] = None
     status: Optional[str] = None
-    order_id: Optional[str] = None
     international: Optional[bool] = None
     method: Optional[str] = None
     amount_refunded: Optional[int] = None
     captured: Optional[bool] = None
-    bank: Optional[str] = None
+    description: Optional[str] = None
+    card_id: Optional[str] = None
     email: Optional[str] = None
     contact: Optional[str] = None
-    notes: Optional[Dict[str, str]] = None
-    acquirer_data: Optional[AcquirerData] = None
+    notes: Optional[Notes] = None
+    fee: Optional[int] = None
     created_at: Optional[int] = None
 
 
