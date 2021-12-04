@@ -3,7 +3,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Enum, \
     Numeric
 from src.database.database import Base
 from src.database.crud import Crud
-
+from datetime import date, datetime
 
 class TransactionType(enum.Enum):
     send = "send"
@@ -24,7 +24,7 @@ class TransactionStatus(enum.Enum):
 class Transaction(Base, Crud):
     __tablename__ = 'transaction'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True)
     razorpay_tid = Column(String)
     amount = Column(Numeric)
     user_id = Column(String, ForeignKey('users.id'))
@@ -32,7 +32,7 @@ class Transaction(Base, Crud):
     fund_account_id = Column(String, nullable=True)
     upi = Column(String)
     status = Column(Enum(TransactionStatus))
-    created_at = Column(DateTime)
+    created_at = Column(DateTime, default=datetime.now())
 
     def __repr__(self):
         return (
