@@ -31,7 +31,8 @@ class Transaction(Base, Crud):
     type = Column(Enum(TransactionType))
     fund_account_id = Column(String, nullable=True)
     upi = Column(String)
-    status = Column(Enum(TransactionStatus))
+    status = Column(String)
+    # status = Column(Enum(TransactionStatus))
     created_at = Column(DateTime, default=datetime.now())
 
     def __repr__(self):
