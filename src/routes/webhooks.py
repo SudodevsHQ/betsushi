@@ -55,12 +55,12 @@ async def razorpay_webhook(request):
         amount=data.payload.payment.entity.amount,
         user_id=user_id,
         type="receive",
-        fund_account_id=data.payload.payment.entity.fund_account_id,
+        fund_account_id=None,
         upi=upi,
         status=data.event.split(".")[1],
     )
 
-    if status == "processed":
+    if status == "captured":
         account = await Account.get_by_user_id(user_id)
         await Account.update_by_user_id(
             user_id, balance=account.balance + data.payload.payment.entity.amount
