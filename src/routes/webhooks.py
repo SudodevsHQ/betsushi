@@ -66,9 +66,9 @@ async def razorpay_webhook(request):
     if status == "authorized":
         account = await Account.get_by_user_id(user_id)
         await Account.update_by_user_id(
-            user_id, balance=account.balance + data.payload.payment.entity.amount / 100
+            user_id, balance=float(account.balance) + data.payload.payment.entity.amount / 100
         )
-        print(f"Credited {data.payload.payment.entity.amount} from {user_id}")
+        print(f"Credited {data.payload.payment.entity.amount // 100} to {user_id}")
 
     # send to websocket here
     websocket = ClientWebsocketEndpoint.user_socket_map.get(user_id)
