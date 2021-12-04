@@ -36,7 +36,7 @@ async def create_fund_account(
     """
     Create a fund account.
     """
-    url = RAZORPAY_BASE_URL + "/fund-accounts"
+    url = RAZORPAY_BASE_URL + "/fund_accounts"
 
     async with session.post(
         url,
@@ -44,6 +44,7 @@ async def create_fund_account(
         auth=aiohttp.BasicAuth(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET),
     ) as resp:
         response = await resp.json()
+        print(response, resp.status)
         return from_dict(data_class=CreateFundAccountResponse, data=response)
 
 
@@ -61,4 +62,5 @@ async def create_payout(
         auth=aiohttp.BasicAuth(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET),
     ) as resp:
         response = await resp.json()
+        print(response, resp.status)
         return from_dict(data_class=CreatePayoutResponse, data=response)

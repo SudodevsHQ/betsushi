@@ -28,3 +28,10 @@ class Crud:
         results = await async_db_session.execute(query)
         (result,) = results.one()
         return result
+
+    @classmethod
+    async def get_by_user_id(cls, id):
+        query = select(cls).where(cls.user_id == id)
+        results = await async_db_session.execute(query)
+        (result,) = results.one()
+        return result

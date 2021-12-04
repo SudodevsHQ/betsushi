@@ -8,7 +8,7 @@ from src.routes.websocket import ClientWebsocketEndpoint
 from starlette.middleware.authentication import AuthenticationMiddleware
 from src.routes.webhooks import razorpay_webhook, razorpayx_webhook
 from src.utils.http import close_aiohttp_session
-
+from src.routes.payout import payout
 from src.routes.create_user import create_user
 from src.routes.create_virtual_account import create_account
 
@@ -30,6 +30,7 @@ app = Starlette(
         Route("/create_virtual_account", create_account, methods=["POST"]),
         Route("/webhook/do", razorpayx_webhook, methods=["POST"]),
         Route("/webhook/get", razorpay_webhook, methods=["POST"]),
+        Route("/payout", payout, methods=["POST"]),
         WebSocketRoute("/ws", ClientWebsocketEndpoint),
     ],
     on_startup=[init_database],

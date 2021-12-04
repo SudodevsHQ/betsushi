@@ -26,7 +26,6 @@ create table if not exists upi
 );
 
 create type transaction_type as enum ('send', 'receive');
-create type transaction_status as enum ('queued', 'pending', 'rejected', 'processing', 'processed', 'cancelled', 'reversed');
 
 create table if not exists transaction
 (
@@ -37,7 +36,7 @@ create table if not exists transaction
     type            transaction_type,
     fund_account_id varchar null,
     upi             varchar,
-    status          transaction_status,
+    status          varchar,
     created_at      timestamp default now(),
     constraint fk_transaction_users foreign key (user_id) references users (id)
 

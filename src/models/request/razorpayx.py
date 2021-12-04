@@ -19,9 +19,9 @@ class Vpa:
 
 @dataclass
 class CreateFundAccountRequest:
-    accounttype: str
-    contactid: str
-    vpa: Vpa
+    account_type: str
+    contact_id: str
+    vpa: Dict[str, str]
 
 
 @dataclass

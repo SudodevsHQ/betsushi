@@ -21,34 +21,33 @@ class CreateContactResponse:
 
 @dataclass
 class CreateFundAccountResponse:
-    id: str
-    entity: str
-    contact_id: str
-    account_type: str
-    vpa: Vpa
-    active: bool
-    created_at: int
+    active: Optional[bool] = None
+    created_at: Optional[int] = None
+    vpa: Optional[Vpa] = None
     batch_id: Optional[str] = None
+    id: Optional[str] = None
+    entity: Optional[str] = None
+    contact_id: Optional[str] = None
+    account_type: Optional[str] = None
 
 
 @dataclass
 class CreatePayoutResponse:
-    id: str
-    entity: str
-    fund_account_id: str
-    amount: int
-    currency: str
-    notes: Dict[str, str]
-    fees: int
-    tax: int
-    status: str
-    utr: str
-    mode: str
-    purpose: str
-    reference_id: str
-    narration: str
-    failure_reason: str
-    created_at: int
+    id: Optional[str] = None
+    entity: Optional[str] = None
+    fund_account_id: Optional[str] = None
+    amount: Optional[int] = None
+    currency: Optional[str] = None
+    fees: Optional[int] = None
+    tax: Optional[int] = None
+    status: Optional[str] = None
+    utr: Optional[str] = None
+    mode: Optional[str] = None
+    purpose: Optional[str] = None
+    reference_id: Optional[str] = None
+    narration: Optional[str] = None
+    failure_reason: Optional[str] = None
+    created_at: Optional[int] = None
     batch_id: Optional[str] = None
 
 
