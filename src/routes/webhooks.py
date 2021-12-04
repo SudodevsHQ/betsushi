@@ -28,7 +28,7 @@ async def razorpayx_webhook(request):
         upi=upi,
         status=status,
     )
-    if status == "processed":
+    if status == "processing":
         account = await Account.get_by_user_id(user_id)
         await Account.update_by_user_id(
             user_id, balance=float(account.balance) - data.payload.payout.entity.amount / 100
