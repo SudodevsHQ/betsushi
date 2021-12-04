@@ -1,6 +1,6 @@
 from dacite import from_dict
 from sqlalchemy.sql.functions import user
-from database.models.account import Account
+from src.database.models.account import Account
 from src.database.models.transaction import Transaction
 from src.models.response.razorpayx import PayoutsPayload
 from src.routes.websocket import ClientWebsocketEndpoint
