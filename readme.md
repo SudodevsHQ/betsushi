@@ -4,8 +4,14 @@ Betsu (別), the japanese word meaning "another" and Shiharai (支払い) meanin
 ---
 ## Introduction
 
-This is the backend for [Indi>Pe](https://github.com/SudodevsHQ/indipe-client), an application that can provide Indian UPI (Unified Payments Interface) to the people of foreign nationality.
+This is the backend for [Indi>Pe](https://github.com/SudodevsHQ/indipe-client) a submission for FTX Hackathon'21, an application that can provide Indian UPI (Unified Payments Interface) to the people of foreign nationality.
 
+Team members:
+
+Aayush Dongre (dankre#7878)
+Anurag Patil (source#5843)
+Ayush Singh (epinephrine69#4257)
+Kunal Sharma (kunal#4839)
 ### Technologies used:
 
 - [PostgreSQL ](https://www.postgresql.org/) for the database
@@ -14,6 +20,12 @@ This is the backend for [Indi>Pe](https://github.com/SudodevsHQ/indipe-client), 
 - [Starlette](https://www.starlette.io/), the library used to build the REST and the websocket services
 - [Firebase Admin](https://firebase.google.com/) to authorize the user, which was authorized by the client.
   
+### Razorpay services used:
+
+- RazorpayX Payouts
+- Razorpay Smart Collect
+- Razorpay International payment Gateway
+
 ### Deployment
 
 #### Prerequisites:
