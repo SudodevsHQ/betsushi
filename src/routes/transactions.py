@@ -12,7 +12,7 @@ def transaction_to_dict(transaction: Transaction) -> dict:
     return {
         "razorpay_tid": transaction.razorpay_tid,
         "user_id": transaction.user_id,
-        "amount": int(transaction.amount),
+        "amount": float(transaction.amount),
         "type": str(transaction.type).split(".")[1],
         "created_at": transaction.created_at,
         "fund_account_id": transaction.fund_account_id,
