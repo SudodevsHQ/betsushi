@@ -1,4 +1,4 @@
-FROM python:alpine3.14
+FROM quay.io/basisai/python-alpine-grpcio:3.9.9-3.14-1.41.1
 VOLUME /tmp
 RUN mkdir -p /app
 RUN apk add --update gcc build-base libc-dev fortify-headers linux-headers && rm -rf /var/cache/apk/*
