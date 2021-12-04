@@ -31,3 +31,8 @@ This is the backend for [Indi>Pe](https://github.com/SudodevsHQ/indipe-client), 
     This will install all the necessary dependencies required for the python server as well as start a postgresql instance
 4. Make a database called `indipe` in the postgresql instance and run the initial schema migrations from `schema/init.sql`
 5. Voila! You are ready to go!
+
+### Flow Diagrams:
+![Send payment](https://media.discordapp.net/attachments/774345555228753930/916724749005119538/INDI_PAY_-_Send_Payment_1.jpg?width=1066&height=686)
+![Receive payment](https://media.discordapp.net/attachments/774345555228753930/916724749386788984/INDI_PAY_-_Receive_Payment_1.jpg?width=951&height=686)
+![Top-up wallet](https://media.discordapp.net/attachments/774345555228753930/916724749625868428/INDI_PAY_-_Top-up_wallet_1.jpg?width=1211&height=686)
