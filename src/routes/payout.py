@@ -30,9 +30,12 @@ async def payout(request):
         mode="UPI",
         purpose="vendor bill",
         queue_if_low_balance=True,
-        reference_id=f"{account.user_id} {fund_account_response.vpa.address}",
+        reference_id=f"{fund_account_response.vpa.address}",
         narration=f"UPI transfer",
-        notes={}
+        notes={
+            "user_id": account.user_id,
+            "upi_id": fund_account_response.vpa.address
+        }
     )
     response = await create_payout(session, data)
     return JSONResponse(response.__dict__)
