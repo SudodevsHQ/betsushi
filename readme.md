@@ -45,6 +45,9 @@ Kunal Sharma (kunal#4839)
 5. Voila! You are ready to go!
 
 ### Flow Diagrams:
-![Send payment](https://media.discordapp.net/attachments/774345555228753930/916724749005119538/INDI_PAY_-_Send_Payment_1.jpg?width=1066&height=686)
-![Receive payment](https://media.discordapp.net/attachments/774345555228753930/916724749386788984/INDI_PAY_-_Receive_Payment_1.jpg?width=951&height=686)
-![Top-up wallet](https://media.discordapp.net/attachments/774345555228753930/916724749625868428/INDI_PAY_-_Top-up_wallet_1.jpg?width=1211&height=686)
+<img width="924" alt="image" src="https://github.com/user-attachments/assets/ebcb3f70-1b2d-4dbf-817e-be991b18f1e8" />
+![image](https://github.com/user-attachments/assets/825a3763-5c46-418f-a728-a4d600153d67)
+![image](https://github.com/user-attachments/assets/52c599c7-3bef-497a-bf8c-47fb88c4e405)
+![image](https://github.com/user-attachments/assets/4d3bf32e-194f-450c-8c29-58562e890936)
+
+
